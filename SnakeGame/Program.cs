@@ -29,9 +29,6 @@ namespace SnakeGame {
         private static Random rnd = new Random();
 
         public static void Main(string[] args) {
-            List<HorizontalLine> horizontalLines = new List<HorizontalLine>();
-            List<VerticalLine> verticalLines = new List<VerticalLine>();
-            
             // Set size of active game area;
             System.Console.SetWindowSize(areaWidth, areaHeight);
             System.Console.SetBufferSize(areaWidth, areaHeight);
@@ -44,7 +41,10 @@ namespace SnakeGame {
             boundaries.Add(new VerticalLine(areaWidth - 2, 0, areaHeight - 1));
             foreach (Figure figure in boundaries) figure.Draw();
 
-            // Draw horizontal and vertical lines in the active game area
+            List<HorizontalLine> horizontalLines = new List<HorizontalLine>();
+            List<VerticalLine> verticalLines = new List<VerticalLine>();
+            
+            // Draw horizontal and vertical lines in the active game's area
             int numberOfHorizontalLines = rnd.Next(minNumberOfHorizontalLines, maxNumberOfHorizontalLines + 1);
             int numberOfVerticalLines = rnd.Next(minNumberOfVerticalLines, maxNumberOfVerticalLines + 1);
 
