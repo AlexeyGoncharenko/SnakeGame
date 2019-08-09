@@ -7,14 +7,14 @@ using System.Threading.Tasks;
 // base game's graphical primitive
 namespace SnakeGame {
     class Point {
-        public int x;
-        public int y;
-        public char symbol;
+        private int x;
+        private int y;
+        private char symbol;
 
         public Point() {
             this.x = 0;
             this.y = 0;
-            this.symbol = '\0';
+            this.symbol = '*';
         }
         
         public Point(int x, int y, char symbol) {
@@ -22,11 +22,42 @@ namespace SnakeGame {
             this.y = y;
             this.symbol = symbol;
         }
-       
+
+        public Point(Point p) {
+            this.x = p.x;
+            this.y = p.y;
+            this.symbol = p.symbol;
+        }
+
+        // direction of point movement
+        public void Move(int offset, Direction direction) {
+            if(direction == Direction.LEFT){
+                this.x -= offset;
+            }
+            else if (direction == Direction.RIGHT)
+            {
+                this.x += offset;
+            }
+            else if (direction == Direction.UP)
+            {
+                this.y -= offset;
+            }
+            else if (direction == Direction.DOWN)
+            {
+                this.y += offset;
+            }
+        }
+
         // just draw point
         public void Draw() {
             Console.SetCursorPosition(x, y);
             Console.Write(symbol);
+        }
+
+        // just cleanup point from game's area
+        public void CleanUp() {
+            this.symbol = ' ';
+            this.Draw();
         }
     }
 }
