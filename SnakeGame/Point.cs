@@ -50,8 +50,8 @@ namespace SnakeGame {
 
         // just draw point
         public void Draw() {
-            Console.SetCursorPosition(x, y);
-            Console.Write(symbol);
+            Console.SetCursorPosition(this.x, this.y);
+            Console.Write(this.symbol);
         }
 
         // just cleanup point from game's area

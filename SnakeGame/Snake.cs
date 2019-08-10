@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SnakeGame {
     class Snake : Figure {
-        Direction snakeDirection;
+        private Direction snakeDirection;
         /// <summary>
         /// Snake class
         /// </summary>
@@ -28,31 +28,37 @@ namespace SnakeGame {
         /// Manages snake's movement
         /// </summary>
         /// <param name="speedOfSnake">Initial value of snake speed [100..500]</param>
-        public void Move(int speedOfSnake) {
+        public void Move(int speedOfSnake, List<Point> food, List<Figure> obstacles) {
             while(true) {
                 Point tail = Obj.First();
                 Point newHead = GetNextPoint(Obj.Last());
-                Obj.Remove(tail);
                 Obj.Add(newHead);
-                tail.CleanUp();
                 newHead.Draw();
-                if (Console.KeyAvailable)
-                {
+
+                // Check that did the snake eat the food
+                if (food.Contains(newHead)) {
+                    food.Remove(newHead);
+                }
+                else {
+                    Obj.Remove(tail);
+                    tail.CleanUp();
+                }
+                
+                // Chek that did the snake meet the any obstacles
+
+
+                if (Console.KeyAvailable) {
                     ConsoleKeyInfo key = Console.ReadKey();
-                    if (key.Key == ConsoleKey.LeftArrow)
-                    {
+                    if (key.Key == ConsoleKey.LeftArrow) {
                         snakeDirection = Direction.LEFT;
                     }
-                    else if (key.Key == ConsoleKey.RightArrow)
-                    {
+                    else if (key.Key == ConsoleKey.RightArrow) {
                         snakeDirection = Direction.RIGHT;
                     }
-                    else if (key.Key == ConsoleKey.UpArrow)
-                    {
+                    else if (key.Key == ConsoleKey.UpArrow) {
                         snakeDirection = Direction.UP;
                     }
-                    else if (key.Key == ConsoleKey.DownArrow)
-                    {
+                    else if (key.Key == ConsoleKey.DownArrow) {
                         snakeDirection = Direction.DOWN;
                     }
                 }

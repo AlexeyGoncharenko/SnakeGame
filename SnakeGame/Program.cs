@@ -14,13 +14,27 @@ using System.Threading.Tasks;
 
 namespace SnakeGame {
     class Program {
-        public static void Main(string[] args) {     
-            CreateArea(80, 25);
-            CreateObstacles();
+        public static void Main(string[] args) {                 
+            CreateArea(80, 25);      
+            
+            // create obstacles
+            ObstacleFactory obstacles = new ObstacleFactory(80, 25, 15, '#');
+            List<Figure> listOfObstacles = obstacles.MakeObstacles();           
+            
+            // create food for snake
+            FoodFactory food = new FoodFactory(80, 25, 15, '$');
+            List<Point> listOfFood = food.MakeFood();
+
             // create snake
-            Snake snake = new Snake(new Point(40, 14, '*'), 5, Direction.RIGHT);
+            Snake snake = new Snake(new Point(40, 14, '@'), 5, Direction.RIGHT);
             snake.Draw();
-            snake.Move(300);
+            snake.Move(100, listOfFood, listOfObstacles);
+
+            while(true){
+                if(listOfFood.Count() == 0) {
+                    listOfFood = food.MakeFood();
+                }
+            }
         }
 
         /// <summary>
@@ -40,40 +54,6 @@ namespace SnakeGame {
             boundaries.Add(new VerticalLine(0, 0, height - 1));
             boundaries.Add(new VerticalLine(width - 2, 0, height - 1));
             foreach (Figure figure in boundaries) figure.Draw();
-        }
-        
-        /// <summary>
-        /// Create obstacles
-        /// </summary>
-        public static void CreateObstacles(){
-            int minNumberOfHorizontalLines = 3;
-            int maxNumberOfHorizontalLines = 5;
-            int minLengthOfHorizontalLines = 3;
-            int maxLengthOfHorizontalLines = 8;
-            int minNumberOfVerticalLines = 5;
-            int maxNumberOfVerticalLines = 8;
-            int minLengthOfVerticalLines = 3;
-            int maxLengthOfVerticalLines = 8;
-            int maxX = 10;
-            int maxY = 10;
-            Random rnd = new Random();
-            List<HorizontalLine> horizontalLines = new List<HorizontalLine>();
-            List<VerticalLine> verticalLines = new List<VerticalLine>();
-
-            // Draw horizontal and vertical lines in the active game's area
-            int numberOfHorizontalLines = rnd.Next(minNumberOfHorizontalLines, maxNumberOfHorizontalLines + 1);
-            int numberOfVerticalLines = rnd.Next(minNumberOfVerticalLines, maxNumberOfVerticalLines + 1);
-
-            for (int i = 0; i < numberOfHorizontalLines; i++) {
-                horizontalLines.Add(new HorizontalLine(rnd.Next(maxX), rnd.Next(maxY), rnd.Next(minLengthOfHorizontalLines, maxLengthOfHorizontalLines + 1)));
-            }
-
-            for (int i = 0; i < numberOfVerticalLines; i++) {
-                verticalLines.Add(new VerticalLine(rnd.Next(maxX), rnd.Next(maxY), rnd.Next(minLengthOfVerticalLines, maxLengthOfVerticalLines + 1)));
-            }
-
-            foreach (HorizontalLine line in horizontalLines) line.Draw();
-            foreach (VerticalLine line in verticalLines) line.Draw();
         }
     }
 }
