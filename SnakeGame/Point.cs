@@ -55,7 +55,7 @@ namespace SnakeGame {
         }
 
         // just cleanup point from game's area
-        public void CleanUp() {
+        public void Erase() {
             this.symbol = ' ';
             this.Draw();
         }

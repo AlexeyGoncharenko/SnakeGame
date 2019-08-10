@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 // construct new vertical line
 namespace SnakeGame {
     class VerticalLine : Figure {
-        public VerticalLine(int x, int y, int length) {
+        public VerticalLine(int x, int y, int length):base() {
             for (int i = 0; i < length; i++) {
-                Obj.Add(new Point(x, y + i, '*'));
+                Points.Add(new Point(x, y + i, '*'));
             }
         }
     } 

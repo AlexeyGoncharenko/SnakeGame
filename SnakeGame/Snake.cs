@@ -20,33 +20,23 @@ namespace SnakeGame {
             for (int i = 0; i < length; i++) {
                 point = new Point(tail);
                 point.Move(i, direction);
-                Obj.Add(point);
+                Points.Add(point);
             }
         }
 
         /// <summary>
         /// Manages snake's movement
         /// </summary>
-        /// <param name="speedOfSnake">Initial value of snake speed [100..500]</param>
-        public void Move(int speedOfSnake, List<Point> food, List<Figure> obstacles) {
+        /// <param name="delayOfSnake">Initial value delay of snake [100..500]</param>
+        public void Move(int delayOfSnake) {
             while(true) {
-                Point tail = Obj.First();
-                Point newHead = GetNextPoint(Obj.Last());
-                Obj.Add(newHead);
+                Point tail = Points.First();
+                Point newHead = GetNextPoint(Points.Last());
+                Points.Add(newHead);                
+                Points.Remove(tail);
                 newHead.Draw();
-
-                // Check that did the snake eat the food
-                if (food.Contains(newHead)) {
-                    food.Remove(newHead);
-                }
-                else {
-                    Obj.Remove(tail);
-                    tail.CleanUp();
-                }
-                
-                // Chek that did the snake meet the any obstacles
-
-
+                tail.Erase();
+               
                 if (Console.KeyAvailable) {
                     ConsoleKeyInfo key = Console.ReadKey();
                     if (key.Key == ConsoleKey.LeftArrow) {
@@ -62,7 +52,7 @@ namespace SnakeGame {
                         snakeDirection = Direction.DOWN;
                     }
                 }
-                Thread.Sleep(speedOfSnake);
+                Thread.Sleep(delayOfSnake);
             }
         }
 

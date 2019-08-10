@@ -14,7 +14,7 @@ namespace SnakeGame {
         }
 
         // public feature for inherited classes
-        public List<Point> Obj {
+        public List<Point> Points {
             get { return points; }
             set { points = value; }
         }

@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 // construct new horizontal line
 namespace SnakeGame {
     class HorizontalLine : Figure {        
-        public HorizontalLine(int x, int y, int length) {
+        public HorizontalLine(int x, int y, int length):base() {
             for (int i = 0; i < length; i++) {
-                Obj.Add(new Point(x + i, y, '*'));
+                Points.Add(new Point(x + i, y, '*'));
             }
         }
     }
