@@ -14,45 +14,50 @@ using System.Threading.Tasks;
 
 namespace SnakeGame {
     class Program {
-        public static void Main(string[] args) {                 
-            CreateArea(80, 25);      
-            
+        private const int WIDTH = 80;
+        private const int HEIGHT= 25;
+
+        public static void Main(string[] args) {
+            // set size and draw boundaries of an active game area 
             // create obstacles
-            ObstacleFactory obstacles = new ObstacleFactory(80, 25, 15, '#');
-           obstacles.MakeObstacles();           
+            ObstacleFactory obstacles = new ObstacleFactory(WIDTH, HEIGHT, 15, '#');
+            obstacles.MakeObstacles();           
             
-            // create food for snake
-            FoodFactory food = new FoodFactory(80, 25, 15, '$');
+            // create food for the snake
+            FoodFactory food = new FoodFactory(WIDTH, HEIGHT, 1, '$');
             food.MakeFood();
 
-            // create snake
+            // create the snake
             Snake snake = new Snake(new Point(40, 14, '@'), 5, Direction.RIGHT);
-            snake.Draw();
-            snake.Move(100);
-
+            snake.Draw();         
+             
             // checking eating food and colliding in obstacles 
-            while (true){
-                
+            while (true) {                
+                if (Console.KeyAvailable) {
+                    ConsoleKeyInfo key = Console.ReadKey();
+                    snake.KeyHandler(key.Key);
+                }              
+                if (snake.IsHitObstacle(obstacles.GetObstacles()) || snake.IsHitTail()) {
+                    GameOver();
+                    break;
+                }
+                else if (snake.Eat(food.GetFood())) {
+                    food.MakeFood();
+                }
+                else {
+                    snake.Move();
+                }  
+                Thread.Sleep(100);
             }
         }
 
-        /// <summary>
-        /// Create game's area
-        /// </summary>
-        /// <param name="width">Width of active area</param>
-        /// <param name="height">Height of active area</param>
-        public static void CreateArea(int width, int height) {
-            // Set size of active game area;
-            System.Console.SetWindowSize(width, height);
-            System.Console.SetBufferSize(width, height);
-
-            // Draw bounding game's area
-            List<Figure> boundaries = new List<Figure>();
-            boundaries.Add(new HorizontalLine(0, 0, width - 1));
-            boundaries.Add(new HorizontalLine(0, height - 1, width - 1));
-            boundaries.Add(new VerticalLine(0, 0, height - 1));
-            boundaries.Add(new VerticalLine(width - 2, 0, height - 1));
-            foreach (Figure figure in boundaries) figure.Draw();
+        // draw message in the end of the game
+        public static void GameOver() {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.SetCursorPosition(30, 12);
+            Console.WriteLine("-===GAME OVER===-");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.ReadKey();
         }
     }
 }

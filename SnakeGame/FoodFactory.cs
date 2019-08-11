@@ -6,34 +6,36 @@ using System.Threading.Tasks;
 
 namespace SnakeGame {
     /// <summary>
-    /// Manages the process of produce food
+    /// Manage the process of produce food
     /// </summary>
-    class FoodFactory {
+    class FoodFactory : Figure {
         private int widthGameArea;
         private int heightGameArea;
         private int amountOfFood;
         private char symbolOfFood;
-        private Figure food;
 
-        public FoodFactory(int width, int height, int amount, char symbol) {
+        public FoodFactory(int width, int height, int amount, char symbol):base() {
             this.widthGameArea = width;
             this.heightGameArea = height;
             this.symbolOfFood = symbol;
             this.amountOfFood = amount;
-            this.food = new Figure();
         }
 
         public void MakeFood(){
             Random rnd = new Random();
-            int numberOfFood = rnd.Next(5, amountOfFood + 1);
-            for (int i = 0; i < numberOfFood; i++) {
-                 this.food.Points.Add(new Point(rnd.Next(1, widthGameArea - 1), rnd.Next(1, heightGameArea - 1), symbolOfFood));
-            }
-            this.food.Draw();
+            if (this.Points.Count > 0) this.Points.Clear();
+            this.Points.Add(new Point(rnd.Next(1, widthGameArea - 1), rnd.Next(1, heightGameArea - 1), symbolOfFood));
+            this.Draw();
         }
 
-        public Figure GetFood(){
-            return this.food;
+        public Point GetFood() {
+            return this.Points.First();
+        }
+
+        public override void Draw() {
+            Console.ForegroundColor = ConsoleColor.Green;
+            base.Draw();
+            Console.ForegroundColor = ConsoleColor.White;
         }
     }
 }

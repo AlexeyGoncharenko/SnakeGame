@@ -4,8 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-// base game's graphical primitive
 namespace SnakeGame {
+    // base game's graphical primitive
     class Point {
         private int x;
         private int y;
@@ -29,6 +29,21 @@ namespace SnakeGame {
             this.symbol = p.symbol;
         }
 
+        public int X{
+            set { this.x = value; }
+            get { return this.x; }
+        }
+
+        public int Y {
+            set { this.y = value; }
+            get { return this.y; }
+        }
+
+        public char Symbol {
+            set { this.symbol = value; }
+            get { return this.symbol; }
+        }
+
         // direction of point movement
         public void Move(int offset, Direction direction) {
             if(direction == Direction.LEFT){
@@ -46,6 +61,11 @@ namespace SnakeGame {
             {
                 this.y += offset;
             }
+        }
+
+        // check does the snake's head reach the object
+        public bool IsHit(Point obj) {
+            return (this.x == obj.x && this.y == obj.y);
         }
 
         // just draw point

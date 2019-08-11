@@ -4,8 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-// base class of geometric figures
 namespace SnakeGame {
+    // base class of geometric figures
     class Figure {
         private List<Point> points;
         
@@ -20,7 +20,7 @@ namespace SnakeGame {
         }
         
         // just draw figure
-        public void Draw() {
+        public virtual void Draw() {
             foreach (Point point in points) point.Draw();
         }
     }
