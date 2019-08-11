@@ -1,6 +1,6 @@
 ## Fix ``` #TODO: ```
 
-### A reference to a related issue in your repository.
+### A reference to a related issue in the repository.
   ```
   * // TODO:
   * // TODO:
