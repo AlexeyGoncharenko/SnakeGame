@@ -1,4 +1,6 @@
-# Snake Game
-## That's the game that originates the whole decades ago.
-![Skin of game](/skin.png)
-
+# [Snake](https://en.wikipedia.org/wiki/Snake_(video_game_genre)) Game
+![Skin of game](/docs/skin.png)
+## Tasks:
+- [x] Create console game
+- [ ] Fix issues
+- [ ] Create final tag version
